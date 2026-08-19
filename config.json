@@ -1,0 +1,97 @@
+{
+  "branding": {
+    "siteTitle": "QE Robotics",
+    "welcomeHeading": "Welcome to QE Robotics!",
+    "tagline": "Queen Elizabeth's School • VEX Robotics Programme",
+    "kingstonLogo": {
+      "src": "/logos/kingston.png",
+      "alt": "Kingston Technology",
+      "href": "https://www.kingston.com",
+      "showWhiteBackground": true
+    },
+    "schoolLogo": {
+      "src": "/logos/qe-school.png",
+      "alt": "Queen Elizabeth's School - Founded in 1573",
+      "href": "https://www.qebarnet.co.uk"
+    }
+  },
+  "navLinks": [
+    {
+      "id": "about",
+      "label": "About QE Robotics",
+      "actionType": "link",
+      "href": "https://vex.vmd1.dev/l/about-qe-robotics"
+    },
+    {
+      "id": "sponsors",
+      "label": "Our sponsors",
+      "actionType": "link",
+      "href": "https://vex.vmd1.dev/l/our-sponsors"
+    },
+    {
+      "id": "viqrcCurrentSeason",
+      "label": "VIQRC Current Season",
+      "actionType": "link",
+      "href": "https://stats-qerobotics-staging.vmd1.dev/viqrc/curr"
+    },
+    {
+      "id": "viqrcPreviousPerformance",
+      "label": "VIQRC Previous Performance",
+      "actionType": "link",
+      "href": "https://stats-qerobotics-staging.vmd1.dev/viqrc/all"
+    },
+    {
+      "id": "v5rcCurrentSeason",
+      "label": "V5RC Current Season",
+      "actionType": "link",
+      "href": "https://stats-qerobotics-staging.vmd1.dev/v5rc/curr"
+    },
+    {
+      "id": "v5rcPreviousPerformance",
+      "label": "V5RC Previous Performance",
+      "actionType": "link",
+      "href": "https://stats-qerobotics-staging.vmd1.dev/v5rc/all"
+    }
+  ],
+  "gridSection": {
+    "leftCards": [
+      {
+        "id": "viqrc",
+        "title": "VIQRC Teams",
+        "subtitle": "Key Stage 3 & Junior Division",
+        "image": "/images/viqrc-teams.jpeg",
+        "overlayGradient": "from-sky-950/70 via-blue-900/50 to-slate-950/70",
+        "tintColor": "bg-cyan-900/25",
+        "borderColor": "border-cyan-500/20 hover:border-cyan-400/60",
+        "actionType": "link",
+        "href": "https://stats-qerobotics-staging.vmd1.dev/viqrc"
+      },
+      {
+        "id": "v5rc",
+        "title": "V5RC Teams",
+        "subtitle": "Senior Division",
+        "image": "/images/v5rc-teams.jpeg",
+        "overlayGradient": "from-rose-950/75 via-red-900/55 to-slate-950/75",
+        "tintColor": "bg-red-900/20",
+        "borderColor": "border-red-500/20 hover:border-red-400/60",
+        "actionType": "link",
+        "href": "https://stats-qerobotics-staging.vmd1.dev/v5rc"
+      }
+    ],
+    "rightCard": {
+      "id": "barnet",
+      "title": "QE Battle for Barnet",
+      "subtitle": "Annual National & Regional VEX Robotics Tournament Hosted by Queen Elizabeth's School",
+      "image": "/images/battle-for-barnet.jpeg",
+      "overlayGradient": "from-slate-950/85 via-slate-900/40 to-slate-950/70",
+      "tintColor": "bg-amber-950/20",
+      "borderColor": "border-amber-500/20 hover:border-amber-400/60",
+      "actionType": "link",
+      "href": "https://vex.vmd1.dev/l/qe-battle-for-barnet"
+    }
+  },
+  "footer": {
+    "copyrightText": "© 2026 QE Robotics • Queen Elizabeth's School, Barnet",
+    "secondaryText": "VEX Robotics Competition • Supported by Kingston Technology"
+  }
+}
