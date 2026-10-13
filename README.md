@@ -1,6 +1,6 @@
 # Robotics Landing Page
 
-A fast, responsive landing page for Robotics (the school) built with React, Vite, and Tailwind CSS.
+A fast, responsive landing page for Robotics built with React, Vite, and Tailwind CSS.
 
 ## 🚀 Quick Start
 
@@ -33,7 +33,7 @@ In `siteConfig.js`, edit the `navLinks` array:
 ### 2. Customizing Bento Grid Cards
 In `siteConfig.js`, edit `gridSection`:
 - **`leftCards`**: Array of cards stacked vertically on the left (e.g. `VIQRC Teams`, `V5RC Teams`).
-- **`rightCard`**: Large featured card on the right (e.g. `team example-tournament`).
+- **`rightCard`** (optional): Large featured card on the right.
 - Each card supports:
   - `title`, `subtitle`
   - `image`: Path in `public/images/`
@@ -42,6 +42,5 @@ In `siteConfig.js`, edit `gridSection`:
   - `href` or `modalData`
 
 ### 3. Logos & Assets
-- sponsor Logo: `public/logos/sponsor.png`
-- team School Logo: `public/logos/logo.png`
+- Placeholder logo: `public/logos/placeholder.svg`
 - Competition Images: `public/images/`
