@@ -1,24 +1,19 @@
 {
   "branding": {
-    "siteTitle": "QE Robotics",
-    "welcomeHeading": "Welcome to QE Robotics!",
-    "tagline": "Queen Elizabeth's School • VEX Robotics Programme",
-    "kingstonLogo": {
-      "src": "/logos/kingston.png",
-      "alt": "Kingston Technology",
-      "href": "https://www.kingston.com",
+    "siteTitle": "Robotics",
+    "welcomeHeading": "Welcome to Robotics!",
+    "tagline": "VEX Robotics Programme",
+    "logo": {
+      "src": "/logos/placeholder.svg",
+      "alt": "Logo placeholder",
+      "href": "",
       "showWhiteBackground": true
-    },
-    "schoolLogo": {
-      "src": "/logos/qe-school.png",
-      "alt": "Queen Elizabeth's School - Founded in 1573",
-      "href": "https://www.qebarnet.co.uk"
     }
   },
   "navLinks": [
     {
       "id": "about",
-      "label": "About QE Robotics",
+      "label": "About Robotics",
       "actionType": "link",
       "href": "https://vex.vmd1.dev/l/about-qe-robotics"
     },
@@ -77,21 +72,10 @@
         "actionType": "link",
         "href": "https://stats-qerobotics-staging.vmd1.dev/v5rc"
       }
-    ],
-    "rightCard": {
-      "id": "barnet",
-      "title": "QE Battle for Barnet",
-      "subtitle": "Annual National & Regional VEX Robotics Tournament Hosted by Queen Elizabeth's School",
-      "image": "/images/battle-for-barnet.jpeg",
-      "overlayGradient": "from-slate-950/85 via-slate-900/40 to-slate-950/70",
-      "tintColor": "bg-amber-950/20",
-      "borderColor": "border-amber-500/20 hover:border-amber-400/60",
-      "actionType": "link",
-      "href": "https://vex.vmd1.dev/l/qe-battle-for-barnet"
-    }
+    ]
   },
   "footer": {
-    "copyrightText": "© 2026 QE Robotics • Queen Elizabeth's School, Barnet",
-    "secondaryText": "VEX Robotics Competition • Supported by Kingston Technology"
+    "copyrightText": "© 2026 Robotics",
+    "secondaryText": "VEX Robotics Competition • Sponsor placeholder"
   }
 }

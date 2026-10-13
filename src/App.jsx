@@ -66,55 +66,34 @@ export default function App() {
       <header className="w-full bg-[#111c2e] border-b border-slate-800/60 pt-4 pb-4 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
           
-          {/* Left: Kingston Logo */}
+          {/* Left: Logo */}
           <div className="flex items-center justify-center md:justify-start w-full md:w-1/3">
-            {branding.kingstonLogo.href ? (
+            {branding.logo.href ? (
               <a 
-                href={branding.kingstonLogo.href}
+                href={branding.logo.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white px-4 py-2 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center hover:shadow-lg hover:scale-105"
               >
                 <img 
-                  src={branding.kingstonLogo.src} 
-                  alt={branding.kingstonLogo.alt} 
+                  src={branding.logo.src} 
+                  alt={branding.logo.alt} 
                   className="h-10 sm:h-12 w-auto object-contain"
                 />
               </a>
             ) : (
               <div className="bg-white px-4 py-2 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center">
                 <img 
-                  src={branding.kingstonLogo.src} 
-                  alt={branding.kingstonLogo.alt} 
+                  src={branding.logo.src} 
+                  alt={branding.logo.alt} 
                   className="h-10 sm:h-12 w-auto object-contain"
                 />
               </div>
             )}
           </div>
 
-          {/* Center: QE School Logo */}
-          <div className="flex flex-col items-center justify-center w-full md:w-1/3 text-center">
-            {branding.schoolLogo.href ? (
-              <a 
-                href={branding.schoolLogo.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block hover:scale-105 transition-transform duration-300"
-              >
-                <img 
-                  src={branding.schoolLogo.src} 
-                  alt={branding.schoolLogo.alt} 
-                  className="h-24 sm:h-28 md:h-32 w-auto object-contain drop-shadow-lg"
-                />
-              </a>
-            ) : (
-              <img 
-                src={branding.schoolLogo.src} 
-                alt={branding.schoolLogo.alt} 
-                className="h-24 sm:h-28 md:h-32 w-auto object-contain drop-shadow-lg hover:scale-105 transition-transform duration-300"
-              />
-            )}
-          </div>
+          {/* Center spacer */}
+          <div className="hidden md:block w-full md:w-1/3" />
 
           {/* Right: Customizable Navigation Links */}
           <nav className="w-full md:w-1/3 flex flex-col items-center md:items-end justify-center space-y-1.5 text-right font-medium">
@@ -143,7 +122,7 @@ export default function App() {
 
       {/* Main Interactive Grid Section */}
       <main className="flex-1 w-full max-w-[1700px] mx-auto p-2 sm:p-4 md:p-6 lg:p-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 h-auto lg:h-[740px]">
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 h-auto lg:h-[740px]">
           
           {/* Left Column: Stacked Customizable Cards */}
           <div className="flex flex-col gap-3 sm:gap-4 h-[550px] lg:h-full">
@@ -175,42 +154,6 @@ export default function App() {
               </div>
             ))}
           </div>
-
-          {/* Right Column: Full-Height Right Card */}
-          {gridSection.rightCard && (
-            <div 
-              onClick={() => handleAction(gridSection.rightCard)}
-              className={`card-container group relative h-[380px] lg:h-full rounded-sm sm:rounded-md overflow-hidden cursor-pointer border ${gridSection.rightCard.borderColor || 'border-amber-500/20'} shadow-lg transition-all duration-500`}
-            >
-              <img 
-                src={gridSection.rightCard.image} 
-                alt={gridSection.rightCard.title} 
-                className="card-zoom absolute inset-0 w-full h-full object-cover object-center"
-              />
-              
-              {/* Overlays */}
-              <div className={`absolute inset-0 bg-gradient-to-t ${gridSection.rightCard.overlayGradient || 'from-slate-950/85 via-slate-900/40 to-slate-950/70'} group-hover:via-slate-900/30 transition-colors duration-500`} />
-              {gridSection.rightCard.tintColor && <div className={`absolute inset-0 ${gridSection.rightCard.tintColor} mix-blend-color`} />}
-
-              {/* Content Overlay */}
-              <div className="relative z-10 w-full h-full flex flex-col items-center justify-center lg:items-end lg:justify-center p-8 sm:p-12 text-center lg:text-right">
-                <div className="max-w-md">
-                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium tracking-wide text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.9)] group-hover:scale-105 inline-block transition-transform duration-300">
-                    {gridSection.rightCard.title}
-                  </span>
-                  {gridSection.rightCard.subtitle && (
-                    <p className="mt-3 text-sm sm:text-base text-slate-300/90 font-light drop-shadow-md hidden sm:block">
-                      {gridSection.rightCard.subtitle}
-                    </p>
-                  )}
-                  <div className="mt-4 flex items-center justify-center lg:justify-end gap-2 text-xs sm:text-sm text-amber-200/90 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span>View Details</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
 
         </div>
       </main>

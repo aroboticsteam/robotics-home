@@ -1,5 +1,5 @@
 /**
- * QE Robotics Landing Page Configuration
+ * Robotics Landing Page Configuration
  * 
  * Customize all navigation links, header info, and main grid cards here.
  * Supported action types:
@@ -10,19 +10,14 @@
 export const siteConfig = {
   // Brand details & Header logos
   branding: {
-    siteTitle: "QE Robotics",
-    welcomeHeading: "Welcome to QE Robotics!",
-    tagline: "Queen Elizabeth's School • VEX Robotics Programme",
-    kingstonLogo: {
-      src: "/logos/kingston.png",
-      alt: "Kingston Technology",
-      href: "https://www.kingston.com",
+    siteTitle: "Robotics",
+    welcomeHeading: "Welcome to Robotics!",
+    tagline: "VEX Robotics Programme",
+    logo: {
+      src: "/logos/placeholder.svg",
+      alt: "Logo placeholder",
+      href: "",
       showWhiteBackground: true
-    },
-    schoolLogo: {
-      src: "/logos/qe-school.png",
-      alt: "Queen Elizabeth's School - Founded in 1573",
-      href: "https://www.qebarnet.co.uk"
     }
   },
 
@@ -30,13 +25,13 @@ export const siteConfig = {
   navLinks: [
     {
       id: "about",
-      label: "About QE Robotics",
+      label: "About Robotics",
       actionType: "link", // "modal" or "link"
       href: "https://vex.vmd1.dev/l/about-qe-robotics",
       modalData: {
         badge: "Excellence in STEM",
-        title: "About QE Robotics",
-        description: "Queen Elizabeth's School Robotics Club is one of the UK's premier competitive school robotics programmes, competing across both VEX IQ (VIQRC) and VEX V5 (V5RC) divisions at national and world championship levels.",
+        title: "About Robotics",
+        description: "The Robotics Club is one of the UK's premier competitive school robotics programmes, competing across both VEX IQ (VIQRC) and VEX V5 (V5RC) divisions at national and world championship levels.",
         stats: [
           { label: "Founded", val: "2015+" },
           { label: "Active Teams", val: "10+" },
@@ -45,8 +40,7 @@ export const siteConfig = {
         ],
         points: [
           "Student-led engineering, autonomous programming, and CAD design",
-          "Extensive track record at the VEX Robotics World Championship in Dallas, USA",
-          "Hosts of the prestigious annual 'QE Battle for Barnet' regional and national qualifiers"
+          "Extensive track record at the VEX Robotics World Championship in Dallas, USA"
         ]
       }
     },
@@ -61,16 +55,10 @@ export const siteConfig = {
         description: "We are proudly supported by world-class industry leaders and academic partners who empower our students with cutting-edge hardware, resources, and mentorship.",
         partners: [
           {
-            name: "Kingston Technology",
-            role: "Headline Tech Partner",
-            desc: "Global leader in memory and storage solutions supporting hardware innovation at QE Robotics.",
-            logo: "/logos/kingston.png"
-          },
-          {
-            name: "Queen Elizabeth's School",
-            role: "Academic & Institutional Foundation",
-            desc: "Founded in 1573, providing world-class STEM education and facilities.",
-            logo: "/logos/qe-school.png"
+            name: "Sponsor Name",
+            role: "Headline Partner",
+            desc: "Sponsor description placeholder.",
+            logo: "/logos/placeholder.svg"
           }
         ]
       }
@@ -98,7 +86,7 @@ export const siteConfig = {
       modalData: {
         badge: "VIQRC • Hall of Fame",
         title: "VIQRC Previous Performance",
-        description: "Historical awards, UK National Championships, and VEX Worlds results for QE VIQRC teams."
+        description: "Historical awards, UK National Championships, and VEX Worlds results for our VIQRC teams."
       }
     },
     {
@@ -109,10 +97,9 @@ export const siteConfig = {
       modalData: {
         badge: "V5RC • 2025 - 2026",
         title: "V5RC Current Season Performance",
-        description: "Live standings, qualification results, and match analytics for QE VEX V5 teams.",
+        description: "Live standings, qualification results, and match analytics for our VEX V5 teams.",
         highlights: [
-          { event: "UK National Qualifiers", result: "Tournament Champions", date: "Recent" },
-          { event: "QE Battle for Barnet", result: "Host & Division Champions", date: "Recent" }
+          { event: "UK National Qualifiers", result: "Tournament Champions", date: "Recent" }
         ]
       }
     },
@@ -124,7 +111,7 @@ export const siteConfig = {
       modalData: {
         badge: "V5RC • Hall of Fame",
         title: "V5RC Previous Performance",
-        description: "Historical awards, UK National titles, Innovate Awards, and VEX World Championship appearances for QE V5RC teams."
+        description: "Historical awards, UK National titles, Innovate Awards, and VEX World Championship appearances for our V5RC teams."
       }
     }
   ],
@@ -174,33 +161,12 @@ export const siteConfig = {
           ]
         }
       }
-    ],
-    rightCard: {
-      id: "barnet",
-      title: "QE Battle for Barnet",
-      subtitle: "Annual National & Regional VEX Robotics Tournament Hosted by Queen Elizabeth's School",
-      image: "/images/battle-for-barnet.jpeg",
-      overlayGradient: "from-slate-950/85 via-slate-900/40 to-slate-950/70",
-      tintColor: "bg-amber-950/20",
-      borderColor: "border-amber-500/20 hover:border-amber-400/60",
-      actionType: "link", // "modal" or "link"
-      href: "https://vex.vmd1.dev/l/qe-battle-for-barnet",
-      modalData: {
-        badge: "Premier Tournament",
-        title: "QE Battle for Barnet",
-        description: "The 'QE Battle for Barnet' is Queen Elizabeth's School's flagship annual robotics tournament, bringing together top teams from across the United Kingdom for intense match play and qualifying spots.",
-        features: [
-          "Full multi-field competition setup with live match broadcasts and live VEX via scoring",
-          "Judged awards evaluated by industry engineers and alumni judges",
-          "Qualifying event for the UK National Championship"
-        ]
-      }
-    }
+    ]
   },
 
   // Footer Config
   footer: {
-    copyrightText: `© ${new Date().getFullYear()} QE Robotics • Queen Elizabeth's School, Barnet`,
-    secondaryText: "VEX Robotics Competition • Supported by Kingston Technology"
+    copyrightText: `© ${new Date().getFullYear()} Robotics`,
+    secondaryText: "VEX Robotics Competition • Sponsor placeholder"
   }
 };
