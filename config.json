@@ -3,16 +3,11 @@
     "siteTitle": "Robotics",
     "welcomeHeading": "Welcome to Robotics!",
     "tagline": "VEX Robotics Programme",
-    "sponsorLogo": {
-      "src": "/logos/sponsor.png",
-      "alt": "Sponsor",
-      "href": "https://example.org",
+    "logo": {
+      "src": "/logos/placeholder.svg",
+      "alt": "Logo placeholder",
+      "href": "",
       "showWhiteBackground": true
-    },
-    "schoolLogo": {
-      "src": "/logos/logo.png",
-      "alt": "Logo",
-      "href": "https://example.org"
     }
   },
   "navLinks": [
@@ -77,21 +72,10 @@
         "actionType": "link",
         "href": "https://example.org/v5rc"
       }
-    ],
-    "rightCard": {
-      "id": "town",
-      "title": "team example-tournament",
-      "subtitle": "Annual National & Regional VEX Robotics Tournament Hosted by the school",
-      "image": "/images/example-tournament.jpeg",
-      "overlayGradient": "from-slate-950/85 via-slate-900/40 to-slate-950/70",
-      "tintColor": "bg-amber-950/20",
-      "borderColor": "border-amber-500/20 hover:border-amber-400/60",
-      "actionType": "link",
-      "href": "https://example.org/l/team-example-tournament"
-    }
+    ]
   },
   "footer": {
     "copyrightText": "© 2026 Robotics",
-    "secondaryText": "VEX Robotics Competition • Supported by Sponsor"
+    "secondaryText": "VEX Robotics Competition • Sponsor placeholder"
   }
 }
