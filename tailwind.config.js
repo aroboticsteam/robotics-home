@@ -1,26 +1,20 @@
+const rgb = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        brand: {
-          navy: '#152136',
-          dark: '#0f172a',
-          gold: '#cbb58c',
-          goldLight: '#e4d5b7',
-          red: '#de2027',
-          blueTint: '#2b6cb0',
-        }
+        // Runtime-themable (set from env by the server as CSS variables)
+        accent: { DEFAULT: rgb('accent'), light: rgb('accent-light'), hover: rgb('accent-hover') },
+        surface: rgb('surface'),
+        panel: { DEFAULT: rgb('panel'), 2: rgb('panel-2'), 3: rgb('panel-3') },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        serif: ['Cinzel', 'Playfair Display', 'Georgia', 'serif'],
-      }
+        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+      },
     },
   },
   plugins: [],
-}
+};

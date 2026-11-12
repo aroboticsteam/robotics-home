@@ -1,0 +1,10 @@
+services:
+  robotics-home:
+    build: .
+    image: robotics-home
+    env_file: .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./media:/media:ro   # optional: local logos/images, referenced as /media/<file>
+    restart: unless-stopped
