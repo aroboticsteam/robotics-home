@@ -1,46 +1,71 @@
-# Robotics Landing Page
+# robotics-home
 
-A fast, responsive landing page for Robotics built with React, Vite, and Tailwind CSS.
+A configurable landing page for a VEX robotics programme, shipped as a single
+Docker image. **All content, branding and theme come from environment
+variables** - there is nothing team-specific in the image and no external
+runtime dependencies (no CDN, no remote config, no web fonts). Logos and card
+images can be any URL you provide.
 
-## 🚀 Quick Start
+## Run
 
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+```bash
+cp .env.example .env     # edit
+docker compose up --build
+# -> http://localhost:8080
+```
 
-2. **Run local dev server**:
-   ```bash
-   npm run dev
-   ```
+Or without compose:
 
-3. **Build for production**:
-   ```bash
-   npm run build
-   ```
+```bash
+docker build -t robotics-home .
+docker run --rm -p 8080:8080 -e SITE_TITLE="My Club" -e STATS_URL=https://stats.example.org robotics-home
+```
 
----
+## Configuration
 
-## ⚙️ Customization Guide
+| Variable | Default | Description |
+|---|---|---|
+| `SITE_TITLE` | `Robotics` | Page title / default heading |
+| `WELCOME_HEADING` | `Welcome to <SITE_TITLE>` | Hero heading |
+| `TAGLINE` | _(none)_ | Line under the heading |
+| `LOGO_URL`, `LOGO_ALT`, `LOGO_HREF` | _(none)_ | Header logo; `LOGO_HREF` makes it a link |
+| `LOGO_WHITE_BG` | `true` | White pill behind the logo |
+| `FAVICON_URL` | logo | Favicon |
+| `FOOTER_TEXT` | `© <year> <SITE_TITLE>` | Footer left |
+| `FOOTER_SECONDARY_TEXT` | `VEX Robotics Competition` | Footer right |
+| `ACCENT_COLOR` / `BACKGROUND_COLOR` / `PANEL_COLOR` | `#cbb58c` / `#111c2e` / `#142137` | Theme (6-digit hex) |
+| `STATS_URL` | _(none)_ | Base URL of a robotics-stats deployment; generates the default cards and nav links |
+| `NAV_LINKS` | from `STATS_URL` | JSON array, see below |
+| `CARDS` | from `STATS_URL` | JSON array, see below |
+| `MEDIA_DIR` | `/media` | Directory served at `/media/` (mount a volume for local logos/images) |
+| `PORT` | `8080` | Listen port |
 
-All navigation links, logos, cards, and modal content are centrally configured in [`src/config/siteConfig.js`](./src/config/siteConfig.js).
+**`NAV_LINKS`**: `[{"label":"About","href":"https://example.org"}]`. An item may
+omit `href` and carry a `modalData` object instead to open a popup
+(`badge`, `title`, `description`, `stats:[{label,val}]`, `points:[]`,
+`features:[]`, `highlights:[{event,result}]`, `partners:[{name,role,desc,logo}]`).
 
-### 1. Customizing Navigation Links (Top-Right Navbar)
-In `siteConfig.js`, edit the `navLinks` array:
-- **Modal Popup**: Set `actionType: "modal"` and provide `modalData` (title, badge, description, bullet points, stats, etc.).
-- **Direct Link / URL**: Set `actionType: "link"`, provide `href: "https://..."` or `href: "#section"`.
+**`CARDS`**: `[{"title":"VIQRC Teams","subtitle":"Junior","image":"/media/viqrc.jpg","href":"https://stats.example.org/viqrc","color":"#0e7490"}]`
+(`image` optional; `color` tints the card). Cards also accept `modalData`.
 
-### 2. Customizing Bento Grid Cards
-In `siteConfig.js`, edit `gridSection`:
-- **`leftCards`**: Array of cards stacked vertically on the left (e.g. `VIQRC Teams`, `V5RC Teams`).
-- **`rightCard`** (optional): Large featured card on the right.
-- Each card supports:
-  - `title`, `subtitle`
-  - `image`: Path in `public/images/`
-  - `overlayGradient`, `tintColor`, `borderColor`
-  - `actionType`: `"modal"` or `"link"`
-  - `href` or `modalData`
+## Scaling
 
-### 3. Logos & Assets
-- Placeholder logo: `public/logos/placeholder.svg`
-- Competition Images: `public/images/`
+The container is stateless (config is read from env at start-up), so run as many
+replicas as you like behind any load balancer. `GET /healthz` is the health
+check; the server drains on `SIGTERM`. Example:
+
+```bash
+docker compose -f docker-compose.scale.yml up --build --scale home=3
+```
+
+## Development
+
+```bash
+npm install
+npm run dev                          # Vite dev server, default config
+npm run build && SITE_TITLE=Demo npm start
+```
+
+## CI
+
+`.github/workflows/docker.yml` builds amd64 and arm64 natively in a matrix (no emulation) on every push and PR, then merges them into one multi-arch tag. Pushes to `main` and `v*` tags publish to `ghcr.io/<owner>/<repo>` (`latest`, `sha-*`, and semver tags). Pull requests only verify the build. No secrets needed beyond the default `GITHUB_TOKEN`.

@@ -2,20 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fallback theme (the server overrides these from env at request time) */
 :root {
+  --accent: 203 181 140;
+  --accent-light: 232 215 184;
+  --accent-hover: 216 197 159;
+  --surface: 17 28 46;
+  --panel: 20 33 55;
+  --panel-2: 27 43 69;
+  --panel-3: 34 54 87;
   color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #111c2e;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: rgb(var(--surface));
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
-/* Custom smooth transitions */
 .card-zoom {
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+.card-container {
+  border-color: var(--card-border, rgb(51 65 85 / 0.5));
+}
+
+.card-container:hover {
+  border-color: var(--card-border-hover, rgb(148 163 184 / 0.6));
 }
 
 .card-container:hover .card-zoom {
