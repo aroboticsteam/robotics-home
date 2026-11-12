@@ -1,0 +1,15 @@
+# Horizontally scaled stack: N identical stateless replicas behind nginx.
+#   docker compose -f docker-compose.scale.yml up --build --scale home=3
+services:
+  home:
+    build: .
+    env_file: .env
+    restart: unless-stopped
+
+  lb:
+    image: nginx:alpine
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"
+    depends_on: [home]

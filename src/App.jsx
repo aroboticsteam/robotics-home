@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Trophy, 
   ChevronRight, 
@@ -6,45 +6,16 @@ import {
   Zap,
   ExternalLink
 } from 'lucide-react';
-import { siteConfig } from './config/siteConfig';
+import { siteConfig as config, withAlpha } from './config/siteConfig';
 
-const API_CONFIG_URL = 'https://example.org/v1/config/robotics';
+const isExternal = (item) => /^https?:\/\//i.test(item.href || '');
 
 export default function App() {
   const [activeModalData, setActiveModalData] = useState(null);
-  const [config, setConfig] = useState(siteConfig);
-
-  useEffect(() => {
-    let isMounted = true;
-    fetch(API_CONFIG_URL)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        if (isMounted && data && typeof data === 'object') {
-          setConfig((prev) => ({
-            ...prev,
-            ...data,
-            branding: { ...prev.branding, ...data.branding },
-            gridSection: { ...prev.gridSection, ...data.gridSection },
-            footer: { ...prev.footer, ...data.footer },
-            navLinks: data.navLinks || prev.navLinks
-          }));
-        }
-      })
-      .catch((err) => {
-        console.warn('Could not load remote config, using default:', err);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const handleAction = (item) => {
-    if (item.actionType === 'link' && item.href) {
-      if (item.href.startsWith('http') || item.external) {
+    if (item.href) {
+      if (isExternal(item)) {
         window.open(item.href, '_blank', 'noopener,noreferrer');
       } else {
         window.location.href = item.href;
@@ -54,42 +25,30 @@ export default function App() {
     }
   };
 
-  const branding = config.branding || siteConfig.branding;
-  const navLinks = config.navLinks || siteConfig.navLinks;
-  const gridSection = config.gridSection || siteConfig.gridSection;
-  const footer = config.footer || siteConfig.footer;
+  const { logo, navLinks, cards, footer } = config;
 
   return (
-    <div className="min-h-screen bg-[#111c2e] text-slate-100 flex flex-col selection:bg-[#cbb58c] selection:text-[#111c2e]">
+    <div className="min-h-screen bg-surface text-slate-100 flex flex-col selection:bg-accent selection:text-surface">
       
       {/* Top Header */}
-      <header className="w-full bg-[#111c2e] border-b border-slate-800/60 pt-4 pb-4 px-4 sm:px-8 lg:px-12">
+      <header className="w-full bg-surface border-b border-slate-800/60 pt-4 pb-4 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
           
           {/* Left: Logo */}
           <div className="flex items-center justify-center md:justify-start w-full md:w-1/3">
-            {branding.logo.href ? (
-              <a 
-                href={branding.logo.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white px-4 py-2 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center hover:shadow-lg hover:scale-105"
-              >
-                <img 
-                  src={branding.logo.src} 
-                  alt={branding.logo.alt} 
-                  className="h-10 sm:h-12 w-auto object-contain"
-                />
-              </a>
-            ) : (
-              <div className="bg-white px-4 py-2 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center">
-                <img 
-                  src={branding.logo.src} 
-                  alt={branding.logo.alt} 
-                  className="h-10 sm:h-12 w-auto object-contain"
-                />
-              </div>
-            )}
+            {logo && (() => {
+              const img = (
+                <img src={logo.src} alt={logo.alt} className="h-10 sm:h-12 w-auto object-contain" />
+              );
+              const box = `${logo.whiteBg ? 'bg-white px-4 py-2 rounded-xl shadow-md' : ''} flex items-center justify-center transition-all duration-300`;
+              return logo.href ? (
+                <a href={logo.href} target="_blank" rel="noopener noreferrer" className={`${box} hover:scale-105`}>
+                  {img}
+                </a>
+              ) : (
+                <div className={box}>{img}</div>
+              );
+            })()}
           </div>
 
           {/* Center spacer */}
@@ -101,10 +60,10 @@ export default function App() {
               <button 
                 key={item.id || item.label}
                 onClick={() => handleAction(item)}
-                className="text-[#cbb58c] hover:text-[#e8d7b8] hover:translate-x-[-2px] transition-all duration-200 text-sm sm:text-base tracking-wide flex items-center gap-1.5 cursor-pointer"
+                className="text-accent hover:text-accent-light hover:translate-x-[-2px] transition-all duration-200 text-sm sm:text-base tracking-wide flex items-center gap-1.5 cursor-pointer"
               >
                 {item.label}
-                {item.actionType === 'link' && (item.href?.startsWith('http') || item.external) && (
+                {isExternal(item) && (
                   <ExternalLink className="w-3.5 h-3.5 opacity-70" />
                 )}
               </button>
@@ -115,8 +74,9 @@ export default function App() {
         {/* Hero Title */}
         <div className="text-center pt-8 pb-3">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight text-white/95">
-            {branding.welcomeHeading}
+            {config.heading}
           </h1>
+          {config.tagline && <p className="mt-2 text-sm sm:text-base text-slate-400">{config.tagline}</p>}
         </div>
       </header>
 
@@ -126,27 +86,41 @@ export default function App() {
           
           {/* Left Column: Stacked Customizable Cards */}
           <div className="flex flex-col gap-3 sm:gap-4 h-[550px] lg:h-full">
-            {gridSection.leftCards.map((card) => (
-              <div 
-                key={card.id || card.title}
+            {cards.length === 0 && (
+              <div className="flex-1 flex items-center justify-center text-center text-slate-400 text-sm border border-dashed border-slate-700 rounded-md p-6">
+                No cards configured. Set the CARDS (or STATS_URL) environment variable.
+              </div>
+            )}
+            {cards.map((card) => (
+              <div
+                key={card.title}
                 onClick={() => handleAction(card)}
-                className={`card-container group relative flex-1 rounded-sm sm:rounded-md overflow-hidden cursor-pointer border ${card.borderColor || 'border-slate-700/50'} shadow-lg transition-all duration-500`}
+                style={{ '--card-border': withAlpha(card.color, 0.3), '--card-border-hover': withAlpha(card.color, 0.7) }}
+                className="card-container group relative flex-1 rounded-sm sm:rounded-md overflow-hidden cursor-pointer border shadow-lg transition-all duration-500"
               >
-                <img 
-                  src={card.image} 
-                  alt={card.title} 
-                  className="card-zoom absolute inset-0 w-full h-full object-cover object-center"
-                />
-                
+                {card.image && (
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    className="card-zoom absolute inset-0 w-full h-full object-cover object-center"
+                  />
+                )}
+
                 {/* Atmospheric overlays */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${card.overlayGradient || 'from-slate-950/70 to-slate-950/70'} transition-colors duration-500 mix-blend-multiply`} />
-                {card.tintColor && <div className={`absolute inset-0 ${card.tintColor} mix-blend-color`} />}
-                
+                <div
+                  className="absolute inset-0 mix-blend-multiply"
+                  style={{ background: `linear-gradient(to right, ${withAlpha(card.color, 0.75)}, ${withAlpha('#020617', 0.7)})` }}
+                />
+                <div className="absolute inset-0 mix-blend-color" style={{ background: withAlpha(card.color, 0.2) }} />
+
                 {/* Card Title and Hover Cue */}
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center">
                   <span className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-300">
                     {card.title}
                   </span>
+                  {card.subtitle && (
+                    <span className="mt-2 text-sm text-slate-200/85">{card.subtitle}</span>
+                  )}
                   <span className="mt-2 text-xs sm:text-sm text-slate-200/85 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
                     Explore <ChevronRight className="w-4 h-4" />
                   </span>
@@ -160,9 +134,9 @@ export default function App() {
 
       {/* Footer info bar */}
       <footer className="w-full border-t border-slate-800/60 py-4 px-6 text-center text-xs sm:text-sm text-slate-400 flex flex-col sm:flex-row items-center justify-between max-w-[1600px] mx-auto gap-2">
-        <p>{footer.copyrightText}</p>
+        <p>{footer.text}</p>
         <p className="text-slate-500 text-xs">
-          {footer.secondaryText}
+          {footer.secondary}
         </p>
       </footer>
 
@@ -173,14 +147,14 @@ export default function App() {
           onClick={() => setActiveModalData(null)}
         >
           <div 
-            className="relative w-full max-w-2xl bg-[#142137] border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-2xl text-slate-100 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+            className="relative w-full max-w-2xl bg-panel border border-slate-700/80 rounded-2xl p-6 sm:p-8 shadow-2xl text-slate-100 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
             <div className="flex items-start justify-between border-b border-slate-700/60 pb-4">
               <div>
                 {activeModalData.badge && (
-                  <span className="inline-block px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#cbb58c]/20 text-[#e8d7b8] border border-[#cbb58c]/30 mb-2">
+                  <span className="inline-block px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-accent/20 text-accent-light border border-accent/30 mb-2">
                     {activeModalData.badge}
                   </span>
                 )}
@@ -210,7 +184,7 @@ export default function App() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
                   {activeModalData.stats.map((s, i) => (
                     <div key={i} className="bg-slate-900/60 border border-slate-800 rounded-xl p-3 text-center">
-                      <div className="text-lg sm:text-xl font-bold text-[#cbb58c]">{s.val}</div>
+                      <div className="text-lg sm:text-xl font-bold text-accent">{s.val}</div>
                       <div className="text-xs text-slate-400 mt-0.5">{s.label}</div>
                     </div>
                   ))}
@@ -222,16 +196,18 @@ export default function App() {
                 <div className="space-y-3 pt-2">
                   {activeModalData.partners.map((partner, i) => (
                     <div key={i} className="flex items-center gap-4 bg-slate-900/60 border border-slate-800 rounded-xl p-4">
-                      <div className="w-20 h-12 flex-shrink-0 flex items-center justify-center bg-white rounded-lg p-2 shadow">
-                        <img 
-                          src={partner.logo} 
-                          alt={partner.name} 
-                          className="max-h-full max-w-full object-contain"
-                        />
-                      </div>
+                      {partner.logo && (
+                        <div className="w-20 h-12 flex-shrink-0 flex items-center justify-center bg-white rounded-lg p-2 shadow">
+                          <img
+                            src={partner.logo}
+                            alt={partner.name}
+                            className="max-h-full max-w-full object-contain"
+                          />
+                        </div>
+                      )}
                       <div>
                         <h4 className="font-semibold text-white text-base">{partner.name}</h4>
-                        <div className="text-xs text-[#cbb58c] font-medium">{partner.role}</div>
+                        <div className="text-xs text-accent font-medium">{partner.role}</div>
                         <p className="text-xs text-slate-400 mt-1">{partner.desc}</p>
                       </div>
                     </div>
@@ -244,7 +220,7 @@ export default function App() {
                 <div className="space-y-2 pt-2">
                   {activeModalData.highlights.map((h, i) => (
                     <div key={i} className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3.5 flex items-start gap-3">
-                      <Trophy className="w-5 h-5 text-[#cbb58c] flex-shrink-0 mt-0.5" />
+                      <Trophy className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                       <div>
                         <div className="font-medium text-white text-sm">{h.event}</div>
                         <div className="text-xs text-emerald-400 mt-0.5">{h.result}</div>
@@ -259,7 +235,7 @@ export default function App() {
                 <ul className="space-y-2 pt-2">
                   {(activeModalData.points || activeModalData.features || activeModalData.achievements).map((pt, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-sm text-slate-300">
-                      <Zap className="w-4 h-4 text-[#cbb58c] flex-shrink-0 mt-0.5" />
+                      <Zap className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
                       <span>{pt}</span>
                     </li>
                   ))}
@@ -271,7 +247,7 @@ export default function App() {
             <div className="border-t border-slate-700/60 pt-4 flex justify-end">
               <button 
                 onClick={() => setActiveModalData(null)}
-                className="px-5 py-2 rounded-xl bg-[#cbb58c] hover:bg-[#d8c59f] text-[#111c2e] font-semibold text-sm transition-colors shadow-lg cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-accent hover:bg-accent-hover text-surface font-semibold text-sm transition-colors shadow-lg cursor-pointer"
               >
                 Close
               </button>
