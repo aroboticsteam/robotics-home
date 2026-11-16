@@ -6,6 +6,7 @@ import {
   Zap,
   ExternalLink
 } from 'lucide-react';
+import Logo from './components/Logo';
 import { siteConfig as config, withAlpha, gridFor } from './config/siteConfig';
 
 const isExternal = (item) => /^https?:\/\//i.test(item.href || '');
@@ -32,30 +33,10 @@ export default function App() {
       
       {/* Top Header */}
       <header className="w-full bg-surface border-b border-slate-800/60 pt-4 pb-4 px-4 sm:px-8 lg:px-12">
-        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
+        <div className="max-w-[1600px] mx-auto flex justify-center md:justify-end">
           
-          {/* Left: Logo */}
-          <div className="flex items-center justify-center md:justify-start w-full md:w-1/3">
-            {logo && (() => {
-              const img = (
-                <img src={logo.src} alt={logo.alt} className="h-10 sm:h-12 w-auto object-contain" />
-              );
-              const box = `${logo.whiteBg ? 'bg-white px-4 py-2 rounded-xl shadow-md' : ''} flex items-center justify-center transition-all duration-300`;
-              return logo.href ? (
-                <a href={logo.href} target="_blank" rel="noopener noreferrer" className={`${box} hover:scale-105`}>
-                  {img}
-                </a>
-              ) : (
-                <div className={box}>{img}</div>
-              );
-            })()}
-          </div>
-
-          {/* Center spacer */}
-          <div className="hidden md:block w-full md:w-1/3" />
-
           {/* Right: Customizable Navigation Links */}
-          <nav className="w-full md:w-1/3 flex flex-col items-center md:items-end justify-center space-y-1.5 text-right font-medium">
+          <nav className="flex flex-col items-center md:items-end justify-center space-y-1.5 text-right font-medium">
             {navLinks.map((item) => (
               <button 
                 key={item.id || item.label}
@@ -72,8 +53,9 @@ export default function App() {
         </div>
 
         {/* Hero Title */}
-        <div className="text-center pt-8 pb-3">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-ink">
+        <div className="text-center pt-2 md:pt-0 pb-3">
+          <Logo logo={logo} className="h-24 sm:h-28 lg:h-32 mx-auto" />
+          <h1 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-ink">
             {config.heading}
           </h1>
           {config.tagline && <p className="mt-2 text-sm sm:text-base text-slate-400">{config.tagline}</p>}
