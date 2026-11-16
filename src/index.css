@@ -76,6 +76,3 @@ h1, h2, h3, .font-heading {
   .cards[data-count='3'] > :nth-child(3) { grid-column: 2; grid-row: 1 / span 2; }
 }
 
-/* The logo files have flat backgrounds (white, and navy): blend them away instead of boxing the logo. */
-.logo-light { mix-blend-mode: multiply; }
-.logo-dark { mix-blend-mode: lighten; }

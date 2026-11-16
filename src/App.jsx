@@ -33,8 +33,16 @@ export default function App() {
       
       {/* Top Header */}
       <header className="w-full bg-surface border-b border-slate-800/60 pt-4 pb-4 px-4 sm:px-8 lg:px-12">
-        <div className="max-w-[1600px] mx-auto flex justify-center md:justify-end">
-          
+        <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+
+          {/* Left: empty, keeps the logo centred */}
+          <div className="hidden md:block" />
+
+          {/* Centre: logo, level with the navigation links */}
+          <div className="flex justify-center">
+            <Logo logo={logo} className="h-20 sm:h-24 lg:h-28" />
+          </div>
+
           {/* Right: Customizable Navigation Links */}
           <nav className="flex flex-col items-center md:items-end justify-center space-y-1.5 text-right font-medium">
             {navLinks.map((item) => (
@@ -53,9 +61,8 @@ export default function App() {
         </div>
 
         {/* Hero Title */}
-        <div className="text-center pt-2 md:pt-0 pb-3">
-          <Logo logo={logo} className="h-24 sm:h-28 lg:h-32 mx-auto" />
-          <h1 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-ink">
+        <div className="text-center pt-2 pb-3">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-ink">
             {config.heading}
           </h1>
           {config.tagline && <p className="mt-2 text-sm sm:text-base text-slate-400">{config.tagline}</p>}
