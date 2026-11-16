@@ -28,8 +28,7 @@ docker run --rm -p 8080:8080 -e SITE_TITLE="My Club" -e STATS_URL=https://stats.
 | `SITE_TITLE` | `Robotics` | Page title / default heading |
 | `WELCOME_HEADING` | `Welcome to <SITE_TITLE>` | Hero heading |
 | `TAGLINE` | _(none)_ | Line under the heading |
-| `LOGO_URL`, `LOGO_ALT`, `LOGO_HREF` | _(none)_ | Header logo; `LOGO_HREF` makes it a link |
-| `LOGO_WHITE_BG` | `true` | White pill behind the logo |
+| `LOGO_URL`, `LOGO_DARK_URL`, `LOGO_ALT`, `LOGO_HREF` | _(none)_ | Logo shown above the heading. `LOGO_URL` is for light backgrounds (dark text), `LOGO_DARK_URL` the inverted version used in dark mode; with only `LOGO_URL` it is shown as-is in both. Flat white/navy backgrounds are blended away, so no box is drawn. `LOGO_HREF` makes it a link. URLs can be `/media/<file>` |
 | `FAVICON_URL` | logo | Favicon |
 | `FOOTER_TEXT` | `© <year> <SITE_TITLE>` | Footer left |
 | `FOOTER_SECONDARY_TEXT` | `VEX Robotics Competition` | Footer right |
