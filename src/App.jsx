@@ -6,7 +6,8 @@ import {
   Zap,
   ExternalLink
 } from 'lucide-react';
-import { siteConfig as config, withAlpha } from './config/siteConfig';
+import Logo from './components/Logo';
+import { siteConfig as config, withAlpha, gridFor } from './config/siteConfig';
 
 const isExternal = (item) => /^https?:\/\//i.test(item.href || '');
 
@@ -28,34 +29,14 @@ export default function App() {
   const { logo, navLinks, cards, footer } = config;
 
   return (
-    <div className="min-h-screen bg-surface text-slate-100 flex flex-col selection:bg-accent selection:text-surface">
+    <div className="site-shell bg-surface text-ink flex flex-col selection:bg-accent selection:text-surface">
       
       {/* Top Header */}
       <header className="w-full bg-surface border-b border-slate-800/60 pt-4 pb-4 px-4 sm:px-8 lg:px-12">
-        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
+        <div className="max-w-[1600px] mx-auto flex justify-center md:justify-end">
           
-          {/* Left: Logo */}
-          <div className="flex items-center justify-center md:justify-start w-full md:w-1/3">
-            {logo && (() => {
-              const img = (
-                <img src={logo.src} alt={logo.alt} className="h-10 sm:h-12 w-auto object-contain" />
-              );
-              const box = `${logo.whiteBg ? 'bg-white px-4 py-2 rounded-xl shadow-md' : ''} flex items-center justify-center transition-all duration-300`;
-              return logo.href ? (
-                <a href={logo.href} target="_blank" rel="noopener noreferrer" className={`${box} hover:scale-105`}>
-                  {img}
-                </a>
-              ) : (
-                <div className={box}>{img}</div>
-              );
-            })()}
-          </div>
-
-          {/* Center spacer */}
-          <div className="hidden md:block w-full md:w-1/3" />
-
           {/* Right: Customizable Navigation Links */}
-          <nav className="w-full md:w-1/3 flex flex-col items-center md:items-end justify-center space-y-1.5 text-right font-medium">
+          <nav className="flex flex-col items-center md:items-end justify-center space-y-1.5 text-right font-medium">
             {navLinks.map((item) => (
               <button 
                 key={item.id || item.label}
@@ -72,64 +53,64 @@ export default function App() {
         </div>
 
         {/* Hero Title */}
-        <div className="text-center pt-8 pb-3">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight text-white/95">
+        <div className="text-center pt-2 md:pt-0 pb-3">
+          <Logo logo={logo} className="h-24 sm:h-28 lg:h-32 mx-auto" />
+          <h1 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-ink">
             {config.heading}
           </h1>
           {config.tagline && <p className="mt-2 text-sm sm:text-base text-slate-400">{config.tagline}</p>}
         </div>
       </header>
 
-      {/* Main Interactive Grid Section */}
-      <main className="flex-1 w-full max-w-[1700px] mx-auto p-2 sm:p-4 md:p-6 lg:p-8">
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 h-auto lg:h-[740px]">
-          
-          {/* Left Column: Stacked Customizable Cards */}
-          <div className="flex flex-col gap-3 sm:gap-4 h-[550px] lg:h-full">
-            {cards.length === 0 && (
-              <div className="flex-1 flex items-center justify-center text-center text-slate-400 text-sm border border-dashed border-slate-700 rounded-md p-6">
-                No cards configured. Set the CARDS (or STATS_URL) environment variable.
-              </div>
-            )}
+      {/* Cards: a grid that arranges itself from the number of cards (see gridFor and .cards) */}
+      <main className="flex-1 min-h-0 w-full max-w-[1700px] mx-auto p-3 sm:p-4 lg:p-6">
+        {cards.length === 0 ? (
+          <div className="h-full min-h-[14rem] flex items-center justify-center text-center text-muted text-sm border border-dashed border-line rounded-md p-6">
+            No cards configured. Set the CARDS (or STATS_URL) environment variable.
+          </div>
+        ) : (
+          <div className="cards" data-count={cards.length} style={{ '--cols': gridFor(cards.length).cols, '--rows': gridFor(cards.length).rows }}>
             {cards.map((card) => (
               <div
                 key={card.title}
+                role="link"
+                tabIndex={0}
                 onClick={() => handleAction(card)}
+                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleAction(card)}
                 style={{ '--card-border': withAlpha(card.color, 0.3), '--card-border-hover': withAlpha(card.color, 0.7) }}
-                className="card-container group relative flex-1 rounded-sm sm:rounded-md overflow-hidden cursor-pointer border shadow-lg transition-all duration-500"
+                className="card-container group relative min-h-0 rounded-md overflow-hidden cursor-pointer border shadow-lg transition-all duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
               >
                 {card.image && (
                   <img
                     src={card.image}
-                    alt={card.title}
+                    alt=""
                     className="card-zoom absolute inset-0 w-full h-full object-cover object-center"
                   />
                 )}
 
-                {/* Atmospheric overlays */}
+                {/* Atmospheric overlays: the card colour over the photo, always dark enough for white text */}
                 <div
                   className="absolute inset-0 mix-blend-multiply"
-                  style={{ background: `linear-gradient(to right, ${withAlpha(card.color, 0.75)}, ${withAlpha('#020617', 0.7)})` }}
+                  style={{ background: `linear-gradient(to right, ${withAlpha(card.color, 0.75)}, rgb(15 23 42 / 0.7))` }}
                 />
                 <div className="absolute inset-0 mix-blend-color" style={{ background: withAlpha(card.color, 0.2) }} />
 
                 {/* Card Title and Hover Cue */}
                 <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-6 text-center">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-medium tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-300">
+                  <span className="font-heading text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-300">
                     {card.title}
                   </span>
                   {card.subtitle && (
-                    <span className="mt-2 text-sm text-slate-200/85">{card.subtitle}</span>
+                    <span className="mt-2 max-w-md text-sm text-white/85">{card.subtitle}</span>
                   )}
-                  <span className="mt-2 text-xs sm:text-sm text-slate-200/85 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+                  <span className="mt-2 text-xs sm:text-sm text-white/85 uppercase tracking-widest opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 flex items-center gap-1">
                     Explore <ChevronRight className="w-4 h-4" />
                   </span>
                 </div>
               </div>
             ))}
           </div>
-
-        </div>
+        )}
       </main>
 
       {/* Footer info bar */}
