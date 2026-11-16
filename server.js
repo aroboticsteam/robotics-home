@@ -64,7 +64,7 @@ const siteConfig = {
   heading: str('WELCOME_HEADING', `Welcome to ${title}`),
   tagline: str('TAGLINE'),
   logo: str('LOGO_URL')
-    ? { src: str('LOGO_URL'), alt: str('LOGO_ALT', `${title} logo`), href: str('LOGO_HREF'), whiteBg: bool('LOGO_WHITE_BG', true) }
+    ? { src: str('LOGO_URL'), darkSrc: str('LOGO_DARK_URL'), alt: str('LOGO_ALT', `${title} logo`), href: str('LOGO_HREF') }
     : null,
   navLinks: navLinks || [],
   cards: cards || [],
