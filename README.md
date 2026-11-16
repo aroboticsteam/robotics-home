@@ -3,7 +3,7 @@
 A configurable landing page for a VEX robotics programme, shipped as a single
 Docker image. **All content, branding and theme come from environment
 variables** - there is nothing team-specific in the image and no external
-runtime dependencies (no CDN, no remote config, no web fonts). Logos and card
+runtime dependencies (no CDN, no remote config; the one font is shipped in the image). Logos and card
 images can be any URL you provide.
 
 ## Run
@@ -33,7 +33,12 @@ docker run --rm -p 8080:8080 -e SITE_TITLE="My Club" -e STATS_URL=https://stats.
 | `FAVICON_URL` | logo | Favicon |
 | `FOOTER_TEXT` | `© <year> <SITE_TITLE>` | Footer left |
 | `FOOTER_SECONDARY_TEXT` | `VEX Robotics Competition` | Footer right |
-| `ACCENT_COLOR` / `BACKGROUND_COLOR` / `PANEL_COLOR` | `#cbb58c` / `#111c2e` / `#142137` | Theme (6-digit hex) |
+| `THEME_MODE` | `auto` | `auto` (dark, light when the visitor's system prefers it), `dark` or `light` |
+| `THEME_<TOKEN>` | configurable brand (navy) | Dark palette, 6-digit hex. `<TOKEN>` is `BG` `BG2` `CARD` `RAISE` `LINE` `INK` `MUTED` `ACCENT` `LINK` `OK` `RED` `BLUE`, e.g. `THEME_BG=#0F172A` |
+| `THEME_LIGHT_<TOKEN>` | configurable brand (light) | Same tokens for the light palette, e.g. `THEME_LIGHT_BG=#F1F5F9` |
+| `IQ_COLOR`, `V5_COLOR` | `#0891B2`, `#DC2626` | Programme colours (VEX IQ, V5) |
+| `FONT_HEADING`, `FONT_HEADING_URL` | `system font`, `/fonts/heading-font.woff2` | Heading font and its woff2 (shipped in the image; set the URL to an empty value to use the system font) |
+| `ACCENT_COLOR`, `BACKGROUND_COLOR`, `PANEL_COLOR` | _(unset)_ | Older names for `THEME_ACCENT`, `THEME_BG`, `THEME_CARD` (dark palette) |
 | `STATS_URL` | _(none)_ | Base URL of a robotics-stats deployment; generates the default cards and nav links |
 | `NAV_LINKS` | from `STATS_URL` | JSON array, see below |
 | `CARDS` | from `STATS_URL` | JSON array, see below |
@@ -46,7 +51,9 @@ omit `href` and carry a `modalData` object instead to open a popup
 `features:[]`, `highlights:[{event,result}]`, `partners:[{name,role,desc,logo}]`).
 
 **`CARDS`**: `[{"title":"VIQRC Teams","subtitle":"Junior","image":"/media/viqrc.jpg","href":"https://stats.example.org/viqrc","color":"#0e7490"}]`
-(`image` optional; `color` tints the card). Cards also accept `modalData`.
+(`image` optional; `color` tints the card: a hex colour, or a theme colour name - `iq`, `v5`, `accent`, `link`, `ok`, `red`, `blue` - so it follows the palette). Cards also accept `modalData`.
+
+**Card layout** arranges itself from the number of cards. On desktop the grid fills exactly one viewport (header and footer included): 1 card fills it, 2 sit side by side, 3 make a 2x2 grid where the last card takes the whole right half, 4 make 2x2, and more make a near-square grid. On phones and short windows the cards stack vertically and the page scrolls.
 
 ## Scaling
 
