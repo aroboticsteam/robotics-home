@@ -2,22 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fallback theme (the server overrides these from env at request time) */
-:root {
-  --accent: 203 181 140;
-  --accent-light: 232 215 184;
-  --accent-hover: 216 197 159;
-  --surface: 17 28 46;
-  --panel: 20 33 55;
-  --panel-2: 27 43 69;
-  --panel-3: 34 54 87;
+/* Dev-only fallback (`npm run dev`): the server injects the real palette from THEME_* env vars at request time. */
+:where(:root) {
+  --bg: 0 14 35; --bg-2: 4 22 46; --card: 7 26 53; --raise: 13 35 66; --line: 27 48 80;
+  --ink: 238 241 246; --muted: 146 163 189; --accent: 201 185 142; --accent-light: 224 214 190; --accent-hover: 212 199 163;
+  --link: 92 192 218; --ok: 95 210 154; --red: 238 141 160; --blue: 124 189 240; --iq: 12 124 157; --v5: 154 35 57;
+  --s-950: 0 14 35; --s-900: 7 26 53; --s-800: 13 35 66; --s-700: 27 48 80; --s-600: 62 83 110; --s-500: 98 118 146;
+  --s-400: 146 163 189; --s-300: 190 201 218; --s-200: 216 224 236; --s-100: 238 241 246; --s-50: 238 241 246;
+  --font-heading: system-ui, sans-serif;
   color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: rgb(var(--surface));
+  background-color: rgb(var(--bg));
+  color: rgb(var(--ink));
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
@@ -35,4 +35,43 @@ body {
 
 .card-container:hover .card-zoom {
   transform: scale(1.04);
+}
+
+h1, h2, h3, .font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Page shell + card grid.
+   Small screens (or short windows): one column, the page scrolls, each card keeps a sensible height.
+   Desktop: the shell is exactly one viewport tall and the grid fills what the header and footer leave. */
+.site-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.cards {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: minmax(14rem, auto);
+}
+
+@media (min-width: 900px) and (min-height: 520px) {
+  .site-shell {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .cards {
+    height: 100%;
+    gap: 1rem;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+    grid-auto-rows: auto;
+  }
+
+  /* Three cards: the first two stack on the left, the last one takes the whole right half. */
+  .cards[data-count='3'] > :nth-child(1) { grid-column: 1; grid-row: 1; }
+  .cards[data-count='3'] > :nth-child(2) { grid-column: 1; grid-row: 2; }
+  .cards[data-count='3'] > :nth-child(3) { grid-column: 2; grid-row: 1 / span 2; }
 }
