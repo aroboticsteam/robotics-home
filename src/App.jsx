@@ -98,7 +98,7 @@ export default function App() {
                 {/* Atmospheric overlays: the card colour over the photo, always dark enough for white text */}
                 <div
                   className="absolute inset-0 mix-blend-multiply"
-                  style={{ background: `linear-gradient(to right, ${withAlpha(card.color, 0.75)}, rgb(15 23 42 / 0.7))` }}
+                  style={{ background: `linear-gradient(to right, ${withAlpha(card.color, 0.75)}, rgb(var(--s-950) / 0.7))` }}
                 />
                 <div className="absolute inset-0 mix-blend-color" style={{ background: withAlpha(card.color, 0.2) }} />
 

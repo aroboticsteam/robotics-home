@@ -33,10 +33,10 @@ docker run --rm -p 8080:8080 -e SITE_TITLE="My Club" -e STATS_URL=https://stats.
 | `FOOTER_TEXT` | `© <year> <SITE_TITLE>` | Footer left |
 | `FOOTER_SECONDARY_TEXT` | `VEX Robotics Competition` | Footer right |
 | `THEME_MODE` | `auto` | `auto` (dark, light when the visitor's system prefers it), `dark` or `light` |
-| `THEME_<TOKEN>` | configurable brand (navy) | Dark palette, 6-digit hex. `<TOKEN>` is `BG` `BG2` `CARD` `RAISE` `LINE` `INK` `MUTED` `ACCENT` `LINK` `OK` `RED` `BLUE`, e.g. `THEME_BG=#0F172A` |
-| `THEME_LIGHT_<TOKEN>` | configurable brand (light) | Same tokens for the light palette, e.g. `THEME_LIGHT_BG=#F1F5F9` |
+| `THEME_<TOKEN>` | Neutral slate (dark) | Dark palette, 6-digit hex. `<TOKEN>` is `BG` `BG2` `CARD` `RAISE` `LINE` `INK` `MUTED` `ACCENT` `LINK` `OK` `RED` `BLUE`, e.g. `THEME_BG=#0F172A` |
+| `THEME_LIGHT_<TOKEN>` | Neutral slate (light) | Same tokens for the light palette, e.g. `THEME_LIGHT_BG=#F1F5F9` |
 | `IQ_COLOR`, `V5_COLOR` | `#0891B2`, `#DC2626` | Programme colours (VEX IQ, V5) |
-| `FONT_HEADING`, `FONT_HEADING_URL` | `system font`, `/fonts/heading-font.woff2` | Heading font and its woff2 (shipped in the image; set the URL to an empty value to use the system font) |
+| `FONT_HEADING`, `FONT_HEADING_URL` | system font | Optional heading font family and a woff2 URL for it (e.g. `/media/heading.woff2` from a mounted volume) |
 | `ACCENT_COLOR`, `BACKGROUND_COLOR`, `PANEL_COLOR` | _(unset)_ | Older names for `THEME_ACCENT`, `THEME_BG`, `THEME_CARD` (dark palette) |
 | `STATS_URL` | _(none)_ | Base URL of a robotics-stats deployment; generates the default cards and nav links |
 | `NAV_LINKS` | from `STATS_URL` | JSON array, see below |
