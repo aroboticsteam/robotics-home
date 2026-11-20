@@ -187,7 +187,14 @@ export default function App() {
                         </div>
                       )}
                       <div>
-                        <h4 className="font-semibold text-white text-base">{partner.name}</h4>
+                        <h4 className="font-semibold text-white text-base">
+                          {partner.href ? (
+                            <a href={partner.href} target="_blank" rel="noopener noreferrer" className="hover:text-accent-light underline-offset-2 hover:underline inline-flex items-center gap-1.5">
+                              {partner.name}
+                              <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                            </a>
+                          ) : partner.name}
+                        </h4>
                         <div className="text-xs text-accent font-medium">{partner.role}</div>
                         <p className="text-xs text-slate-400 mt-1">{partner.desc}</p>
                       </div>
