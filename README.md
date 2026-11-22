@@ -47,7 +47,7 @@ docker run --rm -p 8080:8080 -e SITE_TITLE="My Club" -e STATS_URL=https://stats.
 **`NAV_LINKS`**: `[{"label":"About","href":"https://example.org"}]`. An item may
 omit `href` and carry a `modalData` object instead to open a popup
 (`badge`, `title`, `description`, `stats:[{label,val}]`, `points:[]`,
-`features:[]`, `highlights:[{event,result}]`, `partners:[{name,role,desc,logo}]`).
+`features:[]`, `highlights:[{event,result}]`, `partners:[{name,role,desc,logo,href}]`).
 
 **`CARDS`**: `[{"title":"VIQRC Teams","subtitle":"Junior","image":"/media/viqrc.jpg","href":"https://stats.example.org/viqrc","color":"#0e7490"}]`
 (`image` optional; `color` tints the card: a hex colour, or a theme colour name - `iq`, `v5`, `accent`, `link`, `ok`, `red`, `blue` - so it follows the palette). Cards also accept `modalData`.
